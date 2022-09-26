@@ -125,7 +125,7 @@ func beginningTimeOfBlock() -> DateComponents {
 }
 
 func getOrder() -> Text {
-    return getColor(Blk: 0) + Text("-") + getColor(Blk: 1) + Text("-") + getColor(Blk: 2) + Text("-") + getColor(Blk: 3) + Text("-") + getColor(Blk: 4)
+    return getColor(Blk: 1) + Text("-") + getColor(Blk: 2) + Text("-") + getColor(Blk: 4) + Text("-") + (ZLunch[cycleDay] == 2 ? getColor(Blk: 5) : getColor(Blk: 6)) + Text("-") + getColor(Blk: 7)
 }
 
 func getColor(Blk: Int) -> Text {
