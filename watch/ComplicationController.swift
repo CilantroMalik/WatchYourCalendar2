@@ -65,10 +65,10 @@ func createTimelineEntry(complication: CLKComplication, date: Date) -> CLKCompli
         formatter.dateFormat = "yyyy/MM/dd"
         let yearStr = formatter.string(from: Date())
         formatter.dateFormat = "yyyy/MM/dd HH:mm"
-        let dayStart = formatter.date(from: yearStr + " 08:40")!
-        var dayEnd = formatter.date(from: yearStr + " 15:20")!
+        let dayStart = formatter.date(from: yearStr + " 08:30")!
+        var dayEnd = formatter.date(from: yearStr + " 15:00")!
         if isSports(){
-            dayEnd = formatter.date(from: yearStr + " 16:10")!}
+            dayEnd = formatter.date(from: yearStr + " 17:00")!}
         if complication.family == CLKComplicationFamily.graphicCircular {
             let template = CLKComplicationTemplateGraphicCircularClosedGaugeText(gaugeProvider: CLKTimeIntervalGaugeProvider(style: .fill, gaugeColors: [.orange], gaugeColorLocations: nil, start: dayStart, end: dayEnd), centerTextProvider: CLKSimpleTextProvider(text: school() ? String(cycleDay) : "—"))
             return CLKComplicationTimelineEntry(date: date, complicationTemplate: template)
@@ -84,10 +84,10 @@ func createTimelineEntry(complication: CLKComplication, date: Date) -> CLKCompli
         formatter.dateFormat = "yyyy/MM/dd"
         let yearStr = formatter.string(from: Date())
         formatter.dateFormat = "yyyy/MM/dd HH:mm"
-        let dayStart = formatter.date(from: yearStr + " 08:40")!
-        var dayEnd = formatter.date(from: yearStr + " 15:20")!
+        let dayStart = formatter.date(from: yearStr + " 08:30")!
+        var dayEnd = formatter.date(from: yearStr + " 15:00")!
         if isSports(){
-            dayEnd = formatter.date(from: yearStr + " 17:30")!}
+            dayEnd = formatter.date(from: yearStr + " 17:00")!}
         if complication.family == CLKComplicationFamily.graphicCircular {
             let template = CLKComplicationTemplateGraphicCircularClosedGaugeText(gaugeProvider: CLKTimeIntervalGaugeProvider(style: .fill, gaugeColors: [.orange], gaugeColorLocations: nil, start: dayStart, end: dayEnd), centerTextProvider: CLKSimpleTextProvider(text: school() ? compGetNextBlock(date: date) : "—"))
             return CLKComplicationTimelineEntry(date: date, complicationTemplate: template)
@@ -103,10 +103,10 @@ func createTimelineEntry(complication: CLKComplication, date: Date) -> CLKCompli
         formatter.dateFormat = "yyyy/MM/dd"
         let yearStr = formatter.string(from: Date())
         formatter.dateFormat = "yyyy/MM/dd HH:mm"
-        let dayStart = formatter.date(from: yearStr + " 08:40")!
-        var dayEnd = formatter.date(from: yearStr + " 17:30")!
+        let dayStart = formatter.date(from: yearStr + " 08:30")!
+        var dayEnd = formatter.date(from: yearStr + " 15:00")!
         if isSports(){
-            dayEnd = formatter.date(from: yearStr + " 16:10")!}
+            dayEnd = formatter.date(from: yearStr + " 17:00")!}
         if complication.family == CLKComplicationFamily.graphicCircular {
             let template = CLKComplicationTemplateGraphicCircularClosedGaugeText(gaugeProvider: CLKTimeIntervalGaugeProvider(style: .fill, gaugeColors: [.orange], gaugeColorLocations: nil, start: dayStart, end: dayEnd), centerTextProvider: CLKSimpleTextProvider(text: school() ? compGetNowBlockLetter(date: date) : "—"))
             return CLKComplicationTimelineEntry(date: date, complicationTemplate: template)
