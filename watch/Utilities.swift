@@ -804,7 +804,7 @@ func compGetNowBlock(date: Date) -> Int{
     if cycleDay == 0{
         return 0
     } else {
-        for n in 1...9{
+        for n in 1...10{
             if timeIsBeforeBlockBegins(date: date, block: n){
                 return n - 1}
         }
