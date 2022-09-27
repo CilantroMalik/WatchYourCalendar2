@@ -377,20 +377,49 @@ class EventsListObs: ObservableObject {
     
     func addEvent(ev: blockEvent, month: Int, day: Int) {
         EventsListObs.evList[month][day]!.append(ev)
-        Connectivity.shared.send(obj: ["eventsList": EventsListObs.evList])
+        var allEvents: [String] = []
+        for (i, month) in (EventsListObs.evList).enumerated() {
+            for key in month.keys {
+                for event in month[key]! {
+                    allEvents.append("\(i)-\(key)-\(event.toString())")
+                }
+            }
+        }
+        let toTransfer = try! JSONEncoder().encode(allEvents)
+        Connectivity.shared.send(obj: ["eventsList": String(data: toTransfer, encoding: .utf8)!])
         objectWillChange.send()
     }
     
     func delEvent(ev: blockEvent) {
         EventsListObs.evList[ev.time.month!-1][ev.time.day!] = EventsListObs.evList[ev.time.month!-1][ev.time.day!]!.filter { !($0.isEqual(ev)) }
-        Connectivity.shared.send(obj: ["eventsList": EventsListObs.evList])
+        var allEvents: [String] = []
+        for (i, month) in (EventsListObs.evList).enumerated() {
+            for key in month.keys {
+                for event in month[key]! {
+                    allEvents.append("\(i)-\(key)-\(event.toString())")
+                }
+            }
+        }
+        let toTransfer = try! JSONEncoder().encode(allEvents)
+        Connectivity.shared.send(obj: ["eventsList": String(data: toTransfer, encoding: .utf8)!])
         objectWillChange.send()
     }
     
     func replaceList(newList: [[Int: [blockEvent]]], sendRefresh: Bool) {
         print("replacing events list")
         EventsListObs.evList = newList
-        if sendRefresh { Connectivity.shared.send(obj: ["eventsList": EventsListObs.evList]) }
+        if sendRefresh {
+            var allEvents: [String] = []
+            for (i, month) in (EventsListObs.evList).enumerated() {
+                for key in month.keys {
+                    for event in month[key]! {
+                        allEvents.append("\(i)-\(key)-\(event.toString())")
+                    }
+                }
+            }
+            let toTransfer = try! JSONEncoder().encode(allEvents)
+            Connectivity.shared.send(obj: ["eventsList": String(data: toTransfer, encoding: .utf8)!])
+        }
         objectWillChange.send()
     }
     

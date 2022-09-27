@@ -182,7 +182,7 @@ struct MidView: View {
                     Text("No Events").font(.title3).fontWeight(.bold).multilineTextAlignment(.center).padding(.bottom, 5)
                 } else {
                     ForEach(eventsThisBlock(), id: \.id) { item in
-                        Button(action: { evEditManager.eventToEdit = item; evEditManager.isEditing.toggle() }, label: { Text(item.label) })
+                        Button(action: { evEditManager.eventToEdit = item; evEditManager.isEditing.toggle() }, label: { Text(item.label.contains(";") ? String(item.label.split(separator: ";")[1]) : item.label) })
                     }
                 }
                 Divider().padding(.vertical, 1) //FIXME: PADDING

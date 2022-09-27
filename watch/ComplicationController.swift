@@ -8,6 +8,7 @@
 import ClockKit
 
 func createTimelineEntry(complication: CLKComplication, date: Date) -> CLKComplicationTimelineEntry? {
+    print("Date: \(date); Next Block: \(compGetNextBlock(date: date))")
     if complication.identifier == "DayAndBlocks" {
         if complication.family == CLKComplicationFamily.modularSmall {
             let template = CLKComplicationTemplateModularSmallStackText(line1TextProvider: CLKSimpleTextProvider(text: getCycleDayDay()), line2TextProvider: CLKSimpleTextProvider(text: compGetOrder()))
@@ -106,7 +107,7 @@ func createTimelineEntry(complication: CLKComplication, date: Date) -> CLKCompli
         let dayStart = formatter.date(from: yearStr + " 08:30")!
         var dayEnd = formatter.date(from: yearStr + " 15:00")!
         if isSports(){
-            dayEnd = formatter.date(from: yearStr + " 17:00")!}
+            dayEnd = formatter.date(from: yearStr + " 17:30")!}
         if complication.family == CLKComplicationFamily.graphicCircular {
             let template = CLKComplicationTemplateGraphicCircularClosedGaugeText(gaugeProvider: CLKTimeIntervalGaugeProvider(style: .fill, gaugeColors: [.orange], gaugeColorLocations: nil, start: dayStart, end: dayEnd), centerTextProvider: CLKSimpleTextProvider(text: school() ? compGetNowBlockLetter(date: date) : "—"))
             return CLKComplicationTimelineEntry(date: date, complicationTemplate: template)

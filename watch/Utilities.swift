@@ -487,7 +487,7 @@ func isSchoolDay() -> Bool{
 func nowIsAfterBlockEnds(block:Int) -> Bool{
     switch block{
     case 9: //next: sports
-        return isAfter(hour1: 17,minute1: 00,hour2: getHour(),minute2: getMinute())
+        return isAfter(hour1: 17,minute1: 30,hour2: getHour(),minute2: getMinute())
     case 8: //next: office hours
         return isAfter(hour1: 15,minute1: 00,hour2: getHour(),minute2: getMinute())
     case 7: //next: d block on day 1
@@ -701,26 +701,27 @@ func school() -> Bool{
 func timeIsBeforeBlockBegins(date: Date, block: Int) -> Bool{
     let hr = Calendar.current.component(.hour, from: date)
     let min = Calendar.current.component(.minute, from: date)
-    if block == 9 { //next: sports
-        return isAfter(hour1: 17,minute1: 00,hour2: hr,minute2: min)
-    } else if block == 8 { //next: office hours
-        return isAfter(hour1: 15,minute1: 00,hour2: hr,minute2: min)
-    } else if block == 7 { //next: d block on day 1
-        return isAfter(hour1: 14,minute1: 35,hour2: hr,minute2: min)
-    } else if block == 6 { //next: Z2
-        return isAfter(hour1: 13,minute1: 30,hour2: hr,minute2: min)
-    } else if block == 5 { //next: Z1
-        return isAfter(hour1: 13,minute1: 05,hour2: hr,minute2: min)
-    } else if block == 4 {// next: c block
-        return isAfter(hour1: 12,minute1: 25,hour2: hr,minute2: min)
-    } else if block == 3 {// next: morning activity
-        return isAfter(hour1: 11,minute1: 20,hour2: hr,minute2: min)
-    } else if block == 2 { //next: b block
-        return isAfter(hour1: 10,minute1: 45,hour2: hr,minute2: min)
+    print("hour: \(hr); minute: \(min)")
+    if block == 0 { //next: house
+        return isAfter(hour1: hr, minute1: min, hour2: 8, minute2: 35)
     } else if block == 1 { //next: a block on day 1
-        return isAfter(hour1: 9,minute1: 40,hour2: hr,minute2: min)
-    } else if block == 0 { //next: house
-        return isAfter(hour1: 8, minute1: 35, hour2: hr, minute2: min)
+        return isAfter(hour1: hr,minute1: min,hour2: 9,minute2: 40)
+    } else if block == 2 { //next: b block
+        return isAfter(hour1: hr,minute1: min,hour2: 10,minute2: 45)
+    } else if block == 3 {// next: morning activity
+        return isAfter(hour1: hr,minute1: min,hour2: 11,minute2: 20)
+    } else if block == 4 {// next: c block
+        return isAfter(hour1: hr,minute1: min,hour2: 12,minute2: 25)
+    } else if block == 5 { //next: Z1
+        return isAfter(hour1: hr,minute1: min,hour2: 13,minute2: 05)
+    } else if block == 6 { //next: Z2
+        return isAfter(hour1: hr,minute1: min,hour2: 13,minute2: 30)
+    } else if block == 7 { //next: d block on day 1
+        return isAfter(hour1: hr,minute1: min,hour2: 14,minute2: 35)
+    } else if block == 8 { //next: office hours
+        return isAfter(hour1: hr,minute1: min,hour2: 15,minute2: 00)
+    } else if block == 9 { //next: sports
+        return isAfter(hour1: hr,minute1: min,hour2: 17,minute2: 30)
     }
     return false
     
@@ -804,10 +805,10 @@ func compGetNowBlock(date: Date) -> Int{
     if cycleDay == 0{
         return 0
     } else {
-        for n in 1...10{
-            if timeIsBeforeBlockBegins(date: date, block: n){
-                return n - 1}
+        for n in 1...9{
+            if timeIsBeforeBlockBegins(date: date, block: n) { return n - 1 }
         }
+        if isAfter(hour1: Calendar.current.component(.hour, from: date), minute1: Calendar.current.component(.hour, from: date), hour2: 17, minute2: 30) { return 9 }
     }
     return 0
 }
@@ -840,7 +841,7 @@ func compGetNowBlockLetter(date: Date) -> String{
         return (blocks[cycleDay]![4])
     } else if timeIsBeforeBlockBegins(date: date, block: 9){
         return "OH"
-    } else if isAfter(hour1: Calendar.current.component(.hour, from: date), minute1: Calendar.current.component(.hour, from: date), hour2: 17, minute2: 00){
+    } else if isAfter(hour1: Calendar.current.component(.hour, from: date), minute1: Calendar.current.component(.hour, from: date), hour2: 17, minute2: 30){
         return sports[cycleDay]
     } else {
         return ("—")
@@ -866,7 +867,7 @@ func compGetClassLength(block: Int) -> Int{
     } else if block == 8 {
         return 20
     } else if block == 9 {
-        return 120
+        return 150
     } else {
         return 99
     }
@@ -976,7 +977,7 @@ func compLongNowClass(date: Date) -> String {
         return "\(classes[cycleDay]![4])"
     } else if timeIsBeforeBlockBegins(date: date, block: 9){
         return "Office Hours"
-    } else if isAfter(hour1: Calendar.current.component(.hour, from: date), minute1: Calendar.current.component(.hour, from: date), hour2: 17, minute2: 00){
+    } else if isAfter(hour1: Calendar.current.component(.hour, from: date), minute1: Calendar.current.component(.hour, from: date), hour2: 17, minute2: 30){
         return sports[cycleDay]
     } else {
         return ("—")

@@ -388,7 +388,8 @@ class EventsListObs: ObservableObject {
         }
         UserDefaults.standard.set(allEvents, forKey: "eventsList")
         let toTransfer = try! JSONEncoder().encode(UserScheduleInfo(classes: classes, ZLunch: ZLunch, sports: sports))
-        Connectivity.shared.send(obj: ["transferDat": toTransfer, "eventsList": EventsListObs.evList])
+        let toTransfer2 = try! JSONEncoder().encode(allEvents)
+        Connectivity.shared.send(obj: ["transferDat": String(data: toTransfer, encoding: .utf8)!, "eventsList": String(data: toTransfer2, encoding: .utf8)!])
         objectWillChange.send()
     }
     
@@ -404,7 +405,8 @@ class EventsListObs: ObservableObject {
         }
         UserDefaults.standard.set(allEvents, forKey: "eventsList")
         let toTransfer = try! JSONEncoder().encode(UserScheduleInfo(classes: classes, ZLunch: ZLunch, sports: sports))
-        Connectivity.shared.send(obj: ["transferDat": toTransfer, "eventsList": EventsListObs.evList])
+        let toTransfer2 = try! JSONEncoder().encode(allEvents)
+        Connectivity.shared.send(obj: ["transferDat": String(data: toTransfer, encoding: .utf8)!, "eventsList": String(data: toTransfer2, encoding: .utf8)!])
         objectWillChange.send()
     }
     
@@ -421,7 +423,8 @@ class EventsListObs: ObservableObject {
         UserDefaults.standard.set(allEvents, forKey: "eventsList")
         if sendRefresh {
             let toTransfer = try! JSONEncoder().encode(UserScheduleInfo(classes: classes, ZLunch: ZLunch, sports: sports))
-            Connectivity.shared.send(obj: ["transferDat": toTransfer, "eventsList": EventsListObs.evList])
+            let toTransfer2 = try! JSONEncoder().encode(allEvents)
+            Connectivity.shared.send(obj: ["transferDat": String(data: toTransfer, encoding: .utf8)!, "eventsList": String(data: toTransfer2, encoding: .utf8)!])
         }
         objectWillChange.send()
     }
@@ -437,7 +440,8 @@ class EventsListObs: ObservableObject {
         }
         UserDefaults.standard.set(allEvents, forKey: "eventsList")
         let toTransfer = try! JSONEncoder().encode(UserScheduleInfo(classes: classes, ZLunch: ZLunch, sports: sports))
-        Connectivity.shared.send(obj: ["transferDat": toTransfer, "eventsList": EventsListObs.evList])
+        let toTransfer2 = try! JSONEncoder().encode(allEvents)
+        Connectivity.shared.send(obj: ["transferDat": String(data: toTransfer, encoding: .utf8)!, "eventsList": String(data: toTransfer2, encoding: .utf8)!])
     }
     
 }

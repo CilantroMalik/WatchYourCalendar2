@@ -75,8 +75,17 @@ struct WatchConfig: View {
         UserDefaults.standard.set(String(data: dat, encoding: .utf8), forKey: "uinfo")
         
         let toTransfer = try! encoder.encode(UserScheduleInfo(classes: classes, ZLunch: ZLunch, sports: sports))
+        var allEvents: [String] = []
+        for (i, month) in (EventsListObs.evList).enumerated() {
+            for key in month.keys {
+                for event in month[key]! {
+                    allEvents.append("\(i)-\(key)-\(event.toString())")
+                }
+            }
+        }
+        let toTransfer2 = try! JSONEncoder().encode(allEvents)
         print("transferring")
-        Connectivity.shared.send(obj: ["transferDat": String(data: toTransfer, encoding: .utf8)!, "eventsList": EventsListObs.evList])
+        Connectivity.shared.send(obj: ["transferDat": String(data: toTransfer, encoding: .utf8)!, "eventsList": String(data: toTransfer2, encoding: .utf8)!])
     }
     
     var body: some View {

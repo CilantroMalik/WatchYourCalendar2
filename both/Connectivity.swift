@@ -66,6 +66,7 @@ extension Connectivity: WCSessionDelegate {
     
     #if os(watchOS)
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+        print("receiving data")
         self.data = userInfo
         let dat = userInfo["transferDat"] as! String
         let decoded = try! JSONDecoder().decode(UserScheduleInfo.self, from: dat.data(using: .utf8)!)
@@ -73,37 +74,45 @@ extension Connectivity: WCSessionDelegate {
         self.classes = decoded.classes
         self.ZLunchDict = decoded.ZLunch
         self.sports = decoded.sports
-        EventsListObs().replaceList(newList: userInfo["eventsList"] as! [[Int: [blockEvent]]], sendRefresh: false)
-//        let lunches = userInfo["ZLunch"]! as! [Int]
-//        let classArr = userInfo["classes"]! as! [String]
-//        let sportsArr = userInfo["sports"]! as! [String]
-//        //eventsList = userInfo["eventsList"] as! [[Int: [blockEvent]]]
-//        EventsListObs().replaceList(newList: userInfo["eventsList"] as! [[Int: [blockEvent]]])
-//
-//        for i in 0...5 {
-//            self.ZLunchDict[i+1] = lunches[i]
-//            self.sports[i+1] = sportsArr[i] == "" ? "Go Home!" : sportsArr[i]
-//        }
-//        let a = classArr[0]
-//        let b = classArr[1]
-//        let c = classArr[2]
-//        let d = classArr[3]
-//        let e = classArr[4]
-//        let f = classArr[5]
-//        let g = classArr[6]
-//        let h = classArr[7]
-//        let z = classArr[8]
-//        self.classes[0] = ["", "", "", "", ""]
-//        self.classes[1] = [a, b, c, z, d]
-//        self.classes[2] = [e, f, g, z, h]
-//        self.classes[3] = [d, a, b, z, c]
-//        self.classes[4] = [h, e, f, z, g]
-//        self.classes[5] = [c, d, a, z, b]
-//        self.classes[6] = [g, h, e, z, f]
         
-//        UserDefaults.standard.set(lunches, forKey: "ZLunch")
-//        UserDefaults.standard.set(classArr, forKey: "classes")
-//        UserDefaults.standard.set(sports, forKey: "sports")
+        let dat3 = userInfo["eventsList"] as! String
+        let allEvents = try! JSONDecoder().decode([String].self, from: dat3.data(using: .utf8)!)
+        var newEvList: [[Int: [blockEvent]]] = [
+            // January 2023
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[], 31:[]],
+            // February 2023
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[]],
+            // March 2023
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[], 31:[]],
+            // April 2023
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[]],
+            // May 2023
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[], 31:[]],
+            // June 2023
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[]],
+            // July 2022
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[], 31:[]],
+            // August 2022
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[], 31:[]],
+            // September 2022
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[]],
+            // October 2022
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[], 31:[]],
+            // November 2022
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[]],
+            // December 2022
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[], 31:[]]
+        ]
+        for str in allEvents {
+            let comps = str.split(separator: "-")
+            print("- Comps -")
+            print(comps)
+            print("- Block Event -")
+            print(blockEvent(String(comps[2])).toString())
+            newEvList[Int(String(comps[0]))!][Int(String(comps[1]))!]?.append(blockEvent(String(comps[2])))
+        }
+        EventsListObs().replaceList(newList: newEvList, sendRefresh: false)
+        
         let uinfo = UserScheduleInfo(classes: self.classes, ZLunch: self.ZLunchDict, sports: sports)
         let encoder = JSONEncoder()
         let dat2 = try! encoder.encode(uinfo)
@@ -118,7 +127,43 @@ extension Connectivity: WCSessionDelegate {
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
         self.data = userInfo
         // self.eventsList = userInfo["eventsList"] as! [[Int: [blockEvent]]]
-        EventsListObs().replaceList(newList: userInfo["eventsList"] as! [[Int: [blockEvent]]], sendRefresh: false)
+        let dat = userInfo["eventsList"] as! String
+        let allEvents = try! JSONDecoder().decode([String].self, from: dat.data(using: .utf8)!)
+        var newEvList: [[Int: [blockEvent]]] = [
+            // January 2023
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[], 31:[]],
+            // February 2023
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[]],
+            // March 2023
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[], 31:[]],
+            // April 2023
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[]],
+            // May 2023
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[], 31:[]],
+            // June 2023
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[]],
+            // July 2022
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[], 31:[]],
+            // August 2022
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[], 31:[]],
+            // September 2022
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[]],
+            // October 2022
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[], 31:[]],
+            // November 2022
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[]],
+            // December 2022
+            [1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[], 13:[], 14:[], 15:[], 16:[], 17:[], 18:[], 19:[], 20:[], 21:[], 22:[], 23:[], 24:[], 25:[], 26:[], 27:[], 28:[], 29:[], 30:[], 31:[]]
+        ]
+        for str in allEvents {
+            let comps = str.split(separator: "-")
+            print("- Comps -")
+            print(comps)
+            print("- Block Event -")
+            print(blockEvent(String(comps[2])).toString())
+            newEvList[Int(String(comps[0]))!][Int(String(comps[1]))!]?.append(blockEvent(String(comps[2])))
+        }
+        EventsListObs().replaceList(newList: newEvList, sendRefresh: false)
         print("Setting data from session: \(self.data)")
     }
     func sessionDidBecomeInactive(_ session: WCSession) {

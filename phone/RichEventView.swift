@@ -250,9 +250,9 @@ struct RichEventView: View {
                                         eventsListObs.saveList()
                                         // *** Schedule Meeting Notification ***
                                         let content = UNMutableNotificationContent()
-                                        var detail = ev.label.contains(";") ? String(ev.label.split(separator: ";")[0]).split(separator: " ") : ev.label.split(separator: " ")
-                                        detail.removeLast()
-                                        detail.removeLast()
+//                                        var detail = ev.label.contains(";") ? String(ev.label.split(separator: ";")[0]).split(separator: " ") : ev.label.split(separator: " ")
+//                                        detail.removeLast()
+//                                        detail.removeLast()
                                         if ev.meetingOrAssessment() == "Assessment" {
                                             if (ev.label.contains(";")) { content.title = ("Reminder: " + String(String(ev.label.split(separator: ";")[0]).split(separator: " ")[0]) + " (\(String(ev.label.split(separator: ";")[1])))") }
                                             else { content.title = "Reminder: " + String(ev.label.split(separator: " ")[0]) }
@@ -275,8 +275,8 @@ struct RichEventView: View {
                                         }
                                         content.categoryIdentifier = "event"
                                         
-                                        //let trigger = UNCalendarNotificationTrigger(dateMatching: DateComponents(calendar: Calendar.current, month: ev.time.month!, day: ev.time.day!, hour: getBlockAlmostStartTimes(ev.block).hour, minute: getBlockAlmostStartTimes(ev.block).minute), repeats: false)
-                                        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+                                        let trigger = UNCalendarNotificationTrigger(dateMatching: DateComponents(calendar: Calendar.current, month: ev.time.month!, day: ev.time.day!, hour: getBlockAlmostStartTimes(ev.block).hour, minute: getBlockAlmostStartTimes(ev.block).minute), repeats: false)
+                                        //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
                                         
                                         let request = UNNotificationRequest(identifier: ev.toString(), content: content, trigger: trigger)
                                         

@@ -129,14 +129,29 @@ func getOrder() -> Text {
 }
 
 func getColor(Blk: Int) -> Text {
+    var index = -1
+    switch Blk {
+    case 1:
+        index = 0
+    case 2:
+        index = 1
+    case 4:
+        index = 2
+    case 5, 6:
+        index = 3
+    case 7:
+        index = 4
+    default:
+        index = -1
+    }
     if globalOffset == 0{
         if nowIsBeforeBlockBegins(block: Blk){
-            return Text(blocks[cycleDay]![Blk]).foregroundColor(.red).fontWeight(.light)
+            return Text(blocks[cycleDay]![index]).foregroundColor(.red).fontWeight(.light)
         } else {
-            return Text(blocks[cycleDay]![Blk]).foregroundColor(.blue).fontWeight(.light)
+            return Text(blocks[cycleDay]![index]).foregroundColor(.blue).fontWeight(.light)
         }
     } else {
-        return Text(blocks[cycleDay]![Blk]).foregroundColor(.white).fontWeight(.light)
+        return Text(blocks[cycleDay]![index]).foregroundColor(.white).fontWeight(.light)
     }
 }
 
